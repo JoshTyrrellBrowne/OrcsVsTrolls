@@ -1,54 +1,27 @@
 #include <iostream>
+#include <string>
+#include "Classes.h"
 
-using namespace std;
-
-class Character {
-public:
-	void flip() { cout << "I know how to flip and I will flipping do it" << endl; }
-	virtual void walk() { cout << "just in case they are too young to walk yet" << endl; }
-	virtual void fly() = 0; //pure virtual function
-};
-
-class Orc : public Character {
-public:
-	void barrelRoll() { cout << "rooooooolllllllllllinggggggg" << endl; }
-	void walk() { cout << "Doopers have a really cool walk!" << endl; }
-	void fly() { cout << "Dooper is flapping and flying" << endl; }
-};
-
-class Troll : public Character {
-public:
-	void fly() { cout << "Average Dooper is flapping and flying" << endl; }
-};
 
 int main(void)
 {
-	cout << "Let go virtual" << endl;
-	//Character character;
-	//character.flip();
-	//character.walk();
+	int sideSelection = 0;
 
-	cout << "Let go create an Orc" << endl;
-	Orc orc;
-	orc.walk();
-	orc.fly();
-	orc.flip();
+	std::cout << "Welcome to the game of 'Orcs Vs Trolls'. This game tells the tale of a small village west of Mordor and how a gang of Orc's had a brutal battle with a gang of Troll's. They fought for control of the village because there was mines rich with ore located there. How will this battle unfold? You must decide." << std::endl;
+	std::cout << "You will have control of one side of this battle." << std::endl;
+	std::cout << "Enter 1 to choose to play as the Orc's, or 2 to choose the Troll's." << std::endl;
 
-	cout << "Let go create an Troll" << endl;
-	Troll troll;
-	troll.walk();
-	troll.fly();
-	troll.flip();
+	std::cin >> sideSelection;
 
-	Character* npc = &orc;
-	npc->flip();
-	npc->fly();
-	npc->walk();
+	if (sideSelection == 1)
+	{
+		std::cout << "You have choosen the Orc's." << std::endl;
+	}
+	else if (sideSelection == 2)
+	{
+		std::cout << "You have choosen the Troll's." << std::endl;
+	}
 
-	npc = &troll;
-	npc->flip();
-	npc->fly();
-	npc->walk();
 
-	cin.get();
+	system("pause");
 }
