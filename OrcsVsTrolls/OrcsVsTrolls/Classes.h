@@ -11,12 +11,20 @@ public:
 	virtual void walk() { std::cout << "just in case they are too young to walk yet" << std::endl; }
 	virtual void fly() = 0; //pure virtual function
 
-	void setName(std::string t_name);
+	void virtual setName(std::string t_name);
 	int getHeath();
 	int getSpellsNum();
 	int getMeleeNum();
 	int getSheildNum();
 	std::string getName();
+
+	void meleeDamage();
+	void spellDamage();
+	void meleeUsed();
+	void spellUsed();
+
+	void meleeDamageOutput() { std::cout << getName() + " has been damaged and lost 25 health." << std::endl; }
+	void spellDamageOutput() { std::cout << getName() + " has been damaged and lost 40 health." << std::endl; }
 
 private:
 	std::string m_name = "";
@@ -30,8 +38,6 @@ class Orc : public Character {
 public:
 	Orc(std::string t_name);
 
-	void barrelRoll() { std::cout << "rooooooolllllllllllinggggggg" << std::endl; }
-	void walk() { std::cout << "Orc is walking" << std::endl; }
 	void fly() { std::cout << "Orc is flying" << std::endl; }
 
 private:

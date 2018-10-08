@@ -48,4 +48,24 @@ std::string Character::getName()
 	return m_name;
 }
 
+void Character::meleeDamage()
+{
+	m_health = m_health - 25;
+}
+
+void Character::spellDamage()
+{
+	m_health = m_health - 40;
+}
+
+void Character::meleeUsed()
+{
+	m_meleeNum--;
+}
+
+void Character::spellUsed()
+{
+	m_spellsNum--;
+}
+
 
