@@ -4,8 +4,8 @@
 
 
 std::string getSide(int t_side);          // returns the side which the player is playing with
-void attacking(Orc t_orc, Troll t_troll, int t_meleeOrSpell);
-void gettingAttacked(Orc t_orc, Troll t_troll, int t_meleeOrSpell);
+void attacking(Orc *t_orc, Troll *t_troll, int t_meleeOrSpell);             // using pointers 
+void gettingAttacked(Orc *t_orc, Troll *t_troll, int t_meleeOrSpell);      
 
 
 int main(void)
@@ -14,12 +14,18 @@ int main(void)
 	int meleeOrSpell = 0;
 
 	Orc orcOne(std::string ("Orc Josh"));
+	Orc *orcOnePointer = &orcOne;
 	Orc orcTwo(std::string("Orc Steve"));
+	Orc *orcTwoPointer = &orcTwo;
 	Orc orcThree(std::string("Orc Mike"));
+	Orc *orcThreePointer = &orcThree;
 
 	Troll trollOne(std::string("Troll Sam"));
+	Troll *trollOnePointer = &trollOne;
 	Troll trollTwo(std::string("Troll Frank"));
+	Troll *trollTwoPointer = &trollTwo;
 	Troll trollThree(std::string("Troll Luke"));
+	Troll *trollThreePointer = &trollThree;
 
 
 	std::cout << orcOne.getHeath() << std::endl;
@@ -46,9 +52,9 @@ int main(void)
 
 	std::cout << "Your gang of " + getSide(sideSelection) + " are storming the village." << std::endl;
 	
-	attacking(orcOne, trollOne, meleeOrSpell);
-	attacking(orcTwo, trollTwo, meleeOrSpell);
-	attacking(orcThree, trollThree, meleeOrSpell);
+	attacking(orcOnePointer, trollOnePointer, meleeOrSpell);
+	attacking(orcTwoPointer, trollTwoPointer, meleeOrSpell);
+	attacking(orcThreePointer, trollThreePointer, meleeOrSpell);
 
 
 
@@ -75,9 +81,9 @@ std::string getSide(int t_side)
 	return sideString;
 }
 
-void attacking(Orc t_orc, Troll t_troll, int t_meleeOrSpell)
+void attacking(Orc *t_orc, Troll *t_troll, int t_meleeOrSpell)
 {
-	std::cout << t_orc.getName() + " is attacking " + t_troll.getName() + "! \nShould he 1: Melee Attack or 2: Spell Attack ?" << std::endl;
+	std::cout << t_orc->getName() + " is attacking " + t_troll->getName() + "! \nShould he 1: Melee Attack or 2: Spell Attack ?" << std::endl;     // need to change all (.) to (->) because we need to derefrence
 	std::cin >> t_meleeOrSpell;
 
 	if (t_meleeOrSpell == 1)
