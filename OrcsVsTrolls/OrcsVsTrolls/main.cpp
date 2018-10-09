@@ -88,69 +88,69 @@ void attacking(Orc *t_orc, Troll *t_troll, int t_meleeOrSpell)
 
 	if (t_meleeOrSpell == 1)
 	{
-		if (t_orc.getMeleeNum() > 0)
+		if (t_orc->getMeleeNum() > 0)
 		{
-			t_troll.meleeDamage();
-			t_troll.meleeDamageOutput();
-			t_orc.meleeUsed();
+			t_troll->meleeDamage();
+			t_troll->meleeDamageOutput();
+			t_orc->meleeUsed();
 		}
 		else
 		{
-			std::cout << t_orc.getName() + " does not have enough strength left for a melee attack and so he recieves a melee attack." << std::endl;
-			t_orc.meleeDamage();
-			t_orc.meleeDamageOutput();
+			std::cout << t_orc->getName() + " does not have enough strength left for a melee attack and so he recieves a melee attack." << std::endl;
+			t_orc->meleeDamage();
+			t_orc->meleeDamageOutput();
 		}
 	}
 
 	if (t_meleeOrSpell == 2)
 	{
-		if (t_orc.getSpellsNum() > 0)
+		if (t_orc->getSpellsNum() > 0)
 		{
-			t_troll.spellDamage();
-			t_troll.spellDamageOutput();
-			t_orc.spellUsed();
+			t_troll->spellDamage();
+			t_troll->spellDamageOutput();
+			t_orc->spellUsed();
 		}
 		else
 		{
-			std::cout << t_orc.getName() + " does not have enough magic left for a spell attack and so he recieves a spell attack." << std::endl;
-			t_orc.spellDamage();
+			std::cout << t_orc->getName() + " does not have enough magic left for a spell attack and so he recieves a spell attack." << std::endl;
+			t_orc->spellDamage();
 		}
 	}
 }
 
 
 // unfinished
-void gettingAttacked(Orc t_orc, Troll t_troll, int t_meleeOrSpell)
+void gettingAttacked(Orc *t_orc, Troll *t_troll, int t_meleeOrSpell)
 {
-	std::cout << t_troll.getName() + " is attacking " + t_orc.getName() + "! \nShould he 1: Block using shield or 2: Dodge ?" << std::endl;
+	std::cout << t_troll->getName() + " is attacking " + t_orc->getName() + "! \nShould he 1: Block using shield or 2: Dodge ?" << std::endl;
 	std::cin >> t_meleeOrSpell;
 
 	if (t_meleeOrSpell == 1)
 	{
-		if (t_troll.getMeleeNum() > 0)
+		if (t_troll->getMeleeNum() > 0)
 		{
 			
 		}
 		else
 		{
-			std::cout << t_orc.getName() + " does not have enough strength left for a melee attack and so he recieves a melee attack." << std::endl;
-			t_orc.meleeDamage();
-			t_orc.meleeDamageOutput();
+			std::cout << t_orc->getName() + " does not have enough strength left for a melee attack and so he recieves a melee attack." << std::endl;
+			t_orc->meleeDamage();
+			t_orc->meleeDamageOutput();
 		}
 	}
 
 	if (t_meleeOrSpell == 2)
 	{
-		if (t_orc.getSpellsNum() > 0)
+		if (t_orc->getSpellsNum() > 0)
 		{
-			t_troll.spellDamage();
-			t_troll.spellDamageOutput();
-			t_orc.spellUsed();
+			t_troll->spellDamage();
+			t_troll->spellDamageOutput();
+			t_orc->spellUsed();
 		}
 		else
 		{
-			std::cout << t_orc.getName() + " does not have enough magic left for a spell attack and so he recieves a spell attack." << std::endl;
-			t_orc.spellDamage();
+			std::cout << t_orc->getName() + " does not have enough magic left for a spell attack and so he recieves a spell attack." << std::endl;
+			t_orc->spellDamage();
 		}
 	}
 }

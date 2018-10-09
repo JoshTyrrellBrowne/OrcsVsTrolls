@@ -23,8 +23,8 @@ public:
 	void meleeUsed();
 	void spellUsed();
 
-	void meleeDamageOutput() { std::cout << getName() + " has been damaged and lost 25 health." << std::endl; }
-	void spellDamageOutput() { std::cout << getName() + " has been damaged and lost 40 health." << std::endl; }
+	void meleeDamageOutput() {} //std::cout << getName() + " has been damaged and lost 25 health." << std::endl; }
+	void spellDamageOutput() {} // std::cout << getName() + " has been damaged and lost 40 health." << std::endl; }
 
 private:
 	std::string m_name = "";
