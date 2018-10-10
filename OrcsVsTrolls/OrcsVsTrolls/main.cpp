@@ -5,13 +5,14 @@
 
 std::string getSide(int t_side);          // returns the side which the player is playing with
 void attacking(Orc *t_orc, Troll *t_troll, int t_meleeOrSpell);             // using pointers 
-void gettingAttacked(Orc *t_orc, Troll *t_troll, int t_meleeOrSpell);      
+void gettingAttacked(Orc *t_orc, Troll *t_troll, int t_shieldOrDodge);      
 
 
 int main(void)
 {
 	int sideSelection = 0;
 	int meleeOrSpell = 0;
+	int shieldOrDodge = 0;
 
 	Orc orcOne(std::string ("Orc Josh"));
 	Orc *orcOnePointer = &orcOne;
@@ -56,6 +57,7 @@ int main(void)
 	attacking(orcTwoPointer, trollTwoPointer, meleeOrSpell);
 	attacking(orcThreePointer, trollThreePointer, meleeOrSpell);
 
+	gettingAttacked(orcOnePointer, trollOnePointer, shieldOrDodge);
 
 
 	system("pause");
@@ -86,7 +88,7 @@ void attacking(Orc *t_orc, Troll *t_troll, int t_meleeOrSpell)
 	std::cout << t_orc->getName() + " is attacking " + t_troll->getName() + "! \nShould he 1: Melee Attack or 2: Spell Attack ?" << std::endl;     // need to change all (.) to (->) because we need to derefrence
 	std::cin >> t_meleeOrSpell;
 
-	if (t_meleeOrSpell == 1)
+	if (t_meleeOrSpell == 1)    // player chooses to melee attack
 	{
 		if (t_orc->getMeleeNum() > 0)
 		{
@@ -102,7 +104,7 @@ void attacking(Orc *t_orc, Troll *t_troll, int t_meleeOrSpell)
 		}
 	}
 
-	if (t_meleeOrSpell == 2)
+	if (t_meleeOrSpell == 2)  // player chooses to spell attack
 	{
 		if (t_orc->getSpellsNum() > 0)
 		{
@@ -120,16 +122,16 @@ void attacking(Orc *t_orc, Troll *t_troll, int t_meleeOrSpell)
 
 
 // unfinished
-void gettingAttacked(Orc *t_orc, Troll *t_troll, int t_meleeOrSpell)
+void gettingAttacked(Orc *t_orc, Troll *t_troll, int t_shieldOrDodge)
 {
 	std::cout << t_troll->getName() + " is attacking " + t_orc->getName() + "! \nShould he 1: Block using shield or 2: Dodge ?" << std::endl;
-	std::cin >> t_meleeOrSpell;
+	std::cin >> t_shieldOrDodge;
 
-	if (t_meleeOrSpell == 1)
+	if (t_shieldOrDodge == 1) // shield choosen
 	{
-		if (t_troll->getMeleeNum() > 0)
+		if (t_troll->getSheildNum > 0)
 		{
-			
+			t_troll->shieldUse();
 		}
 		else
 		{
@@ -139,7 +141,7 @@ void gettingAttacked(Orc *t_orc, Troll *t_troll, int t_meleeOrSpell)
 		}
 	}
 
-	if (t_meleeOrSpell == 2)
+	if (t_shieldOrDodge == 2)
 	{
 		if (t_orc->getSpellsNum() > 0)
 		{

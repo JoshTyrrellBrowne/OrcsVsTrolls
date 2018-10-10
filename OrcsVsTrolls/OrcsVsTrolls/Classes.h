@@ -2,6 +2,7 @@
 
 
 #include <iostream>
+#include <string>
 
 //using namespace std;
 
@@ -18,20 +19,25 @@ public:
 	int getSheildNum();
 	std::string getName();
 
-	void meleeDamage();
+	void meleeDamage();   // char takes damage
+	void meleeUsed();	// char used melee
 	void spellDamage();
-	void meleeUsed();
 	void spellUsed();
 
-	void meleeDamageOutput() {} //std::cout << getName() + " has been damaged and lost 25 health." << std::endl; }
-	void spellDamageOutput() {} // std::cout << getName() + " has been damaged and lost 40 health." << std::endl; }
+	void shieldUse();
+	void dodgeUse();
+
+
+	void meleeDamageOutput() { std::cout << getName() + " has been damaged and lost 25 health.\n" << std::endl;}   // \n because puts a seperation between battle phases
+	void spellDamageOutput() { std::cout << getName() + " has been damaged and lost 40 health.\n" << std::endl; }
 
 private:
 	std::string m_name = "";
-	int m_health{100};
-	int m_spellsNum{3};
-	int m_meleeNum{5};
-	int m_shieldNum{3};
+	int m_health{ 100 };
+	int m_spellsNum{ 3 };
+	int m_meleeNum{ 5 };
+	int m_shieldNum{ 3 };
+	int m_dodgeNum{ 2 };
 };
 
 class Orc : public Character {

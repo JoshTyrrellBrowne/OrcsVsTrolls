@@ -68,6 +68,18 @@ void Character::spellUsed()
 	m_spellsNum--;
 }
 
+void Character::shieldUse()
+{
+	m_shieldNum--;
+	std::cout << getName() + " has raised his shield and blocked the attack.\n" << std::endl;
+}
+
+void Character::dodgeUse()
+{
+	m_dodgeNum--;
+	std::cout << getName() + " was too quick and managed to dodge the attack.\n" << std::endl;
+}
+
 
 
 
