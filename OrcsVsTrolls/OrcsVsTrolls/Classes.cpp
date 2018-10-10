@@ -43,6 +43,11 @@ int Character::getSheildNum()
 	return m_shieldNum;
 }
 
+int Character::getDodgeNum()
+{
+	return m_dodgeNum;
+}
+
 std::string Character::getName()
 {
 	return m_name;
@@ -50,12 +55,14 @@ std::string Character::getName()
 
 void Character::meleeDamage()
 {
-	m_health = m_health - 25;
+	m_health = m_health - 40;
+	std::cout << getName() + " has been damaged and lost 40 health.\n" << std::endl; // \n because puts a seperation between battle phases
 }
 
 void Character::spellDamage()
 {
-	m_health = m_health - 40;
+	m_health = m_health - 60;
+	std::cout << getName() + " has been damaged and lost 60 health.\n" << std::endl;
 }
 
 void Character::meleeUsed()
@@ -78,6 +85,12 @@ void Character::dodgeUse()
 {
 	m_dodgeNum--;
 	std::cout << getName() + " was too quick and managed to dodge the attack.\n" << std::endl;
+}
+
+void Character::kill()
+{
+	alive = false;
+	std::cout << getName() + " has ran out of health and is now dead! R.I.P\n" << std::endl;
 }
 
 

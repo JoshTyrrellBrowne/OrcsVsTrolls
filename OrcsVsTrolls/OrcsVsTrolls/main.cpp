@@ -1,18 +1,27 @@
 #include <iostream>
 #include <string>
+#include <time.h>       /* time */
 #include "Classes.h"
 
 
 std::string getSide(int t_side);          // returns the side which the player is playing with
 void attacking(Orc *t_orc, Troll *t_troll, int t_meleeOrSpell);             // using pointers 
-void gettingAttacked(Orc *t_orc, Troll *t_troll, int t_shieldOrDodge);      
-
+void defending(Orc *t_orc, Troll *t_troll, int t_shieldOrDodge);      
+void checkForBattleEnd(Orc *t_orc, Troll *t_troll, bool &t_battle);        // this checks if someone has been killed
 
 int main(void)
 {
+	srand(time(NULL));		// seed for rand
 	int sideSelection = 0;
 	int meleeOrSpell = 0;
 	int shieldOrDodge = 0;
+	int randVar = 0;
+
+	bool battleOne = true;
+	bool battleTwo = true;
+	bool battleThree = true;
+
+	bool gameover = false;
 
 	Orc orcOne(std::string ("Orc Josh"));
 	Orc *orcOnePointer = &orcOne;
@@ -27,12 +36,6 @@ int main(void)
 	Troll *trollTwoPointer = &trollTwo;
 	Troll trollThree(std::string("Troll Luke"));
 	Troll *trollThreePointer = &trollThree;
-
-
-	std::cout << orcOne.getHeath() << std::endl;
-
-
-
 
 	std::cout << "Welcome to the game of 'Orcs Vs Trolls'. This game tells the tale of a small village west of Mordor and how a gang \nof Orc's had a brutal battle with a gang of Troll's. They fought for control of the village because there was mines \nrich with ore located there. How will this battle unfold? You must decide." << std::endl;
 	std::cout << "You will have control of one side of this battle." << std::endl;
@@ -53,21 +56,64 @@ int main(void)
 
 	std::cout << "Your gang of " + getSide(sideSelection) + " are storming the village." << std::endl;
 	
-	attacking(orcOnePointer, trollOnePointer, meleeOrSpell);
-	attacking(orcTwoPointer, trollTwoPointer, meleeOrSpell);
-	attacking(orcThreePointer, trollThreePointer, meleeOrSpell);
+	while (gameover == false)
+	{
+		if (battleOne == true)
+		{
+			randVar = rand() % 2 + 1;     // initialise randomiser (either attacking or defending)
+			if (randVar == 1)
+			{
+				attacking(orcOnePointer, trollOnePointer, meleeOrSpell);
+			}
+			if (randVar == 2)
+			{
+				defending(orcOnePointer, trollOnePointer, shieldOrDodge);
+			}
+			checkForBattleEnd(orcOnePointer, trollOnePointer, battleOne); // check for dead characters
+		}
 
-	gettingAttacked(orcOnePointer, trollOnePointer, shieldOrDodge);
+		if (battleTwo == true)
+		{
+			randVar = rand() % 2 + 1;     // initialise randomiser (either attacking or defending)
+			if (randVar == 1)
+			{
+				attacking(orcTwoPointer, trollTwoPointer, meleeOrSpell);
+			}
+			if (randVar == 2)
+			{
+				defending(orcTwoPointer, trollTwoPointer, shieldOrDodge);
+			}
+			checkForBattleEnd(orcTwoPointer, trollTwoPointer, battleTwo); // check for dead characters
+		}
+
+		if (battleThree == true)
+		{
+			randVar = rand() % 2 + 1;     // initialise randomiser (either attacking or defending)
+			if (randVar == 1)
+			{
+				attacking(orcThreePointer, trollThreePointer, meleeOrSpell);
+			}
+			if (randVar == 2)
+			{
+				defending(orcThreePointer, trollThreePointer, shieldOrDodge);
+			}
+			checkForBattleEnd(orcThreePointer, trollThreePointer, battleThree); // check for dead characters
+		}
+
+		if (battleOne == false && battleTwo == false && battleThree == false)
+		{
+			gameover = true;
+		}
+	}
+
+	std::cout << "Congratulations!!!! You have defeated the Troll army." << std::endl;
 
 
 	system("pause");
 }
 
-
-
-
-
-
+// function used to get which side (orc or troll) the player chooses
+// Note: game does not implement this decision fully yet.
 std::string getSide(int t_side)
 {
 	std::string sideString;
@@ -83,6 +129,7 @@ std::string getSide(int t_side)
 	return sideString;
 }
 
+// funtion for attacking sequence
 void attacking(Orc *t_orc, Troll *t_troll, int t_meleeOrSpell)
 {
 	std::cout << t_orc->getName() + " is attacking " + t_troll->getName() + "! \nShould he 1: Melee Attack or 2: Spell Attack ?" << std::endl;     // need to change all (.) to (->) because we need to derefrence
@@ -93,14 +140,12 @@ void attacking(Orc *t_orc, Troll *t_troll, int t_meleeOrSpell)
 		if (t_orc->getMeleeNum() > 0)
 		{
 			t_troll->meleeDamage();
-			t_troll->meleeDamageOutput();
 			t_orc->meleeUsed();
 		}
 		else
 		{
 			std::cout << t_orc->getName() + " does not have enough strength left for a melee attack and so he recieves a melee attack." << std::endl;
 			t_orc->meleeDamage();
-			t_orc->meleeDamageOutput();
 		}
 	}
 
@@ -109,7 +154,6 @@ void attacking(Orc *t_orc, Troll *t_troll, int t_meleeOrSpell)
 		if (t_orc->getSpellsNum() > 0)
 		{
 			t_troll->spellDamage();
-			t_troll->spellDamageOutput();
 			t_orc->spellUsed();
 		}
 		else
@@ -121,38 +165,54 @@ void attacking(Orc *t_orc, Troll *t_troll, int t_meleeOrSpell)
 }
 
 
-// unfinished
-void gettingAttacked(Orc *t_orc, Troll *t_troll, int t_shieldOrDodge)
+// Function for defending sequence
+void defending(Orc *t_orc, Troll *t_troll, int t_shieldOrDodge)
 {
-	std::cout << t_troll->getName() + " is attacking " + t_orc->getName() + "! \nShould he 1: Block using shield or 2: Dodge ?" << std::endl;
+	std::cout << t_orc->getName() + " is getting attacked by " + t_troll->getName() + "! \nShould he 1: Block using shield or 2: Dodge ?" << std::endl;
 	std::cin >> t_shieldOrDodge;
 
 	if (t_shieldOrDodge == 1) // shield choosen
 	{
-		if (t_troll->getSheildNum > 0)
+		if (t_orc->getSheildNum() > 0)
 		{
-			t_troll->shieldUse();
+			t_orc->shieldUse();
 		}
 		else
 		{
-			std::cout << t_orc->getName() + " does not have enough strength left for a melee attack and so he recieves a melee attack." << std::endl;
+			std::cout << t_orc->getName() + " has taken too much damage to his shield and it is now broken,\n and so he recieves a melee attack." << std::endl;
 			t_orc->meleeDamage();
-			t_orc->meleeDamageOutput();
 		}
 	}
 
-	if (t_shieldOrDodge == 2)
+	if (t_shieldOrDodge == 2)  // dodge choosen
 	{
-		if (t_orc->getSpellsNum() > 0)
+		if (t_orc->getDodgeNum() > 0)
 		{
-			t_troll->spellDamage();
-			t_troll->spellDamageOutput();
-			t_orc->spellUsed();
+			t_orc->dodgeUse();
 		}
 		else
 		{
-			std::cout << t_orc->getName() + " does not have enough magic left for a spell attack and so he recieves a spell attack." << std::endl;
+			std::cout << t_orc->getName() + " does not currently have enough energy to successfully dodge so he recieves a spell attack." << std::endl;
 			t_orc->spellDamage();
 		}
 	}
 }
+
+void checkForBattleEnd(Orc * t_orc, Troll * t_troll, bool &t_battle)
+{
+	if (t_orc->getHeath() <= 0)  // orc has no health
+	{
+		// orc dead
+		t_orc->kill();
+		t_battle = false;
+	}
+	if (t_troll->getHeath() <= 0)  // troll has no health
+	{
+		// troll dead
+		t_troll->kill();
+		t_battle = false;
+	}
+}
+
+
+
